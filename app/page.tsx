@@ -32,7 +32,8 @@ export default function Home() {
             <>
               <h1 className="font-semibold text-4xl mb-4">Hello Leon!</h1>
               <p className="mb-6">
-                Horem ipsum dolor sit amet, consectetur adipiscing elit.
+                Use this chatbot to recieve support from the TUM School of
+                Management
               </p>
             </>
           )}
