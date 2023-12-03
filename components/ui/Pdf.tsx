@@ -7,17 +7,17 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
-const Pdf = ({ file }) => {
+const Pdf = ({ file }: any) => {
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
   const [isLoading, setIsLoading] = useState(true); // Track loading status
 
-  function onDocumentLoadSuccess({ numPages }) {
+  function onDocumentLoadSuccess({ numPages }: any) {
     setNumPages(numPages);
     setIsLoading(false); // Update loading status when the document is fully loaded
   }
 
-  function onDocumentLoadError(error) {
+  function onDocumentLoadError(error: any) {
     console.error("PDF load error: ", error);
     setIsLoading(false); // Also update loading status on error
   }
@@ -48,7 +48,8 @@ const Pdf = ({ file }) => {
         </button>
         <button
           onClick={goToNextPage}
-          disabled={pageNumber >= numPages}
+          // @ts-ignore
+          disabled={pageNumber >= !numPages}
           className="p-1 bg-gray-200 text-black rounded"
         >
           <GrNext />
@@ -67,10 +68,10 @@ const Pdf = ({ file }) => {
   );
 };
 
-const PdfViewer = ({ files }) => {
+const PdfViewer = ({ files }: any) => {
   return (
     <div className="flex items-center justify-center flex-wrap gap-2">
-      {files.map((file, index) => (
+      {files.map((file: any, index: any) => (
         <Pdf key={index} file={file} />
       ))}
     </div>

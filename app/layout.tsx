@@ -65,7 +65,7 @@ export default function RootLayout({
                 </Card>
               </PopoverContent>
             </Popover>
-            <Button variant="primary">Logout</Button>
+            <Button variant="ghost">Logout</Button>
           </div>
         </header>
         {children}

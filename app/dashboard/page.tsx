@@ -43,7 +43,7 @@ const DialogDemo = () => {
         <DialogHeader>
           <DialogTitle>Edit profile</DialogTitle>
           <DialogDescription>
-            Make changes to your profile here. Click save when you're done.
+            Make changes to your profile here. Click save when you&apos;re done.
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
@@ -115,7 +115,8 @@ const dataSource = [
 
 const Page = () => {
   const [value, setValue] = useState(true);
-  const valueFormatter = (number) => {
+
+  const valueFormatter = (number: number) => {
     return `${number?.toFixed(2)}%`;
   };
   return (
@@ -141,8 +142,8 @@ const Page = () => {
                 <DialogHeader>
                   <DialogTitle>Database Managment</DialogTitle>
                   <DialogDescription>
-                    Make changes to TUM.support Databse. Click save when you're
-                    done.
+                    Make changes to TUM.support Databse. Click save when
+                    you&apos;re done.
                   </DialogDescription>
                 </DialogHeader>
                 <div className="grid gap-4 py-4">
@@ -289,7 +290,7 @@ const Page = () => {
   );
 };
 
-function IconTrendingdown(props) {
+function IconTrendingdown(props: any) {
   return (
     <svg
       {...props}
@@ -309,7 +310,7 @@ function IconTrendingdown(props) {
   );
 }
 
-function IconTrendingup(props) {
+function IconTrendingup(props: any) {
   return (
     <svg
       {...props}

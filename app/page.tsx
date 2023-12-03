@@ -25,7 +25,7 @@ async function getData() {
   return res;
 }
 export default function Home() {
-  const { toggle } = useStore();
+  const { toggle }: any = useStore();
   return (
     <>
       <main className="flex items-center justify-center p-8 bg-white h-screen w-screen">
