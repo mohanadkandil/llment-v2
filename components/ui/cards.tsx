@@ -45,8 +45,6 @@ const questions = [
   },
 ];
 
-const chatLog = [{}];
-
 export function Chat() {
   const [inputValue, setInputValue] = useState("");
   const [chatLog, setChatLog] = useState([]);
@@ -72,7 +70,6 @@ export function Chat() {
         { role: "assistant", content: data.choices[0].message.content },
       ]);
     }
-    console.log("Data", data);
   }, [data]);
 
   const handleSubmit = (event: any) => {
@@ -95,8 +92,9 @@ export function Chat() {
         method: "POST",
         headers: {
           Authorization: `Basic ${encodedCredentials}`,
+          "Content-Type": "application/json",
         },
-        body: chatLog,
+        body: JSON.stringify(chatLog),
       });
       const data = await response.json();
       setData(data);
@@ -108,6 +106,7 @@ export function Chat() {
   };
 
   const pdfFiles = data.refs?.map((ref) => ref.docurl);
+  // questions.map((query, idx) => console.log(query));
 
   return (
     <div className="w-full p-4">
