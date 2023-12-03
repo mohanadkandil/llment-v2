@@ -59,108 +59,6 @@ const encodedCredentials = Buffer.from(`${username}:${password}`).toString(
   "base64"
 );
 
-export function TabsDemo() {
-  // const [loading, setLoading] = useState(true);
-  // async function getData() {
-  //   const res = await fetch(url, {
-  //     method: "GET",
-  //     headers: {
-  //       Authorization: `Basic ${encodedCredentials}`,
-  //     },
-  //   })
-  //     .then((response) => response.json())
-  //     .then((data) => console.log(data))
-  //     .then((data) => setData(data))
-  //     .finally(() => setLoading(false))
-  //     .catch((error) => console.error("Error:", error));
-  //   return res;
-  // }
-
-  // useEffect(() => {
-  //   setLoading(true);
-  //   fetch(url, {
-  //     method: "GET",
-  //     headers: {
-  //       Authorization: `Basic ${encodedCredentials}`,
-  //     },
-  //   })
-  //     .then((response) => response.json())
-  //     .finally(() => setLoading(false))
-  //     .catch((error) => console.error("Error:", error));
-  // }, []);
-
-  return (
-    <Tabs
-      defaultValue="Add"
-      className="w-[400px] flex items-center flex-col justify-center"
-    >
-      <TabsList className="grid w-full grid-cols-2">
-        <TabsTrigger value="Add">Add</TabsTrigger>
-        <TabsTrigger value="Delete">Delete</TabsTrigger>
-      </TabsList>
-      <TabsContent value="Add">
-        <Card>
-          <CardHeader>
-            <CardTitle>Add Data</CardTitle>
-            <CardDescription>
-              Make changes to your account here. Click save when you&apos;re
-              done.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-2">
-            <div className="space-y-1">
-              <Label htmlFor="name">Name</Label>
-              <Input id="name" defaultValue="Pedro Duarte" />
-            </div>
-            <div className="space-y-1">
-              <Label htmlFor="username">Username</Label>
-              <Input id="username" defaultValue="@peduarte" />
-            </div>
-          </CardContent>
-        </Card>
-      </TabsContent>
-      <TabsContent value="Delete">
-        <Card>
-          <CardHeader>
-            <CardTitle>Delete Data</CardTitle>
-            <CardDescription>
-              Change your password here. After saving, you&apos;ll be logged
-              out.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-2">
-            <Table>
-              <TableCaption>
-                A list of files uploaded to the Automatic Search System
-              </TableCaption>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="w-[100px]">Links</TableHead>
-                  <TableHead>Delete</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {data.files.map((q, i) => {
-                  <TableRow key={i}>
-                    <TableCell className="font-medium">{q.filename}</TableCell>
-                    <TableCell>{q.url}</TableCell>
-                  </TableRow>;
-                })}
-              </TableBody>
-              <TableFooter>
-                <TableRow>
-                  <TableCell colSpan={3}>Total</TableCell>
-                  <TableCell className="text-right"></TableCell>
-                </TableRow>
-              </TableFooter>
-            </Table>
-          </CardContent>
-        </Card>
-      </TabsContent>
-    </Tabs>
-  );
-}
-
 const chartdata3 = [
   {
     date: "Jan 23",
@@ -231,9 +129,7 @@ const Page = () => {
                     you&apos;re done.
                   </DialogDescription>
                 </DialogHeader>
-                <div className="grid gap-4 py-4">
-                  <TabsDemo />
-                </div>
+
                 <DialogFooter>
                   <Button type="submit">Save changes</Button>
                 </DialogFooter>
