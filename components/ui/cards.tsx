@@ -24,6 +24,29 @@ import {
 } from "@/components/ui/accordion";
 import PdfViewer from "./Pdf";
 
+const questions = [
+  {
+    topic: "Final Thesis",
+    "0": "Where can I find more information on the final thesis?",
+    "1": "Where can I find more information on preparing and submitting my final thesis?",
+    "2": "How can I get a confirmation that I'll definitely graduate with at least a 4.0 in my thesis?",
+  },
+  {
+    topic: "Exchnage Program",
+    "0": "What are my possibilities to spend a semester abroad?",
+    "1": "How do I apply for the TUMexchange Program?",
+    "2": "When do I have to apply for an exchange semester if I want to go next year?",
+  },
+  {
+    topic: "Career",
+    "0": "Are internships part of the program at TUM?",
+    "1": "Where can I find jobs and internships related to my field of study?",
+    "2": "How can I determine which study program or job suits my interests?",
+  },
+];
+
+const chatLog = [{}];
+
 export function Chat() {
   const [inputValue, setInputValue] = useState("");
   const [chatLog, setChatLog] = useState([]);
@@ -38,7 +61,7 @@ export function Chat() {
   const encodedCredentials = Buffer.from(`${username}:${password}`).toString(
     "base64"
   );
-
+  console.log(chatLog);
   useEffect(() => {
     // @ts-ignore
     if (data && data.choices && data.choices.length > 0) {
@@ -46,7 +69,7 @@ export function Chat() {
       setChatLog((prevChatLog) => [
         ...prevChatLog,
         // @ts-ignore
-        { type: "ai", message: data.choices[0].message.content },
+        { role: "assistant", content: data.choices[0].message.content },
       ]);
     }
     console.log("Data", data);
@@ -58,9 +81,8 @@ export function Chat() {
     // @ts-ignore
     setChatLog((prevChatLog) => [
       ...prevChatLog,
-      { type: "user", message: inputValue },
+      { role: "user", content: inputValue },
     ]);
-
     sendMessage(inputValue);
     setInputValue("");
   };
@@ -70,10 +92,11 @@ export function Chat() {
 
     try {
       const response = await fetch(`https://tum.support/sendmsg/${message}`, {
-        method: "GET",
+        method: "POST",
         headers: {
           Authorization: `Basic ${encodedCredentials}`,
         },
+        body: chatLog,
       });
       const data = await response.json();
       setData(data);
@@ -96,19 +119,19 @@ export function Chat() {
               key={index}
               className={`flex ${
                 // @ts-ignore
-                message.type === "user" ? "justify-start" : "justify-start"
+                message.role === "user" ? "justify-start" : "justify-start"
               }`}
             >
               <div
                 className={`rounded-lg p-4 ${
                   // @ts-ignore
-                  message.type === "user"
+                  message.role === "user"
                     ? "bg-white text-black"
                     : "bg-gray-800 text-white"
                 }`}
               >
-                {message.message}
-                {message.type !== "user" && data.refs.length != 0 && (
+                {message.content}
+                {message.role !== "user" && data.refs.length != 0 && (
                   <Accordion type="single" collapsible>
                     <AccordionItem value="item-1">
                       <AccordionTrigger>Show refrences</AccordionTrigger>
@@ -160,30 +183,62 @@ export default function Cards() {
       {/* Card rendering logic */}
       {toggle && (
         <>
-          {[...Array(3)].map((_, index) => (
-            <div
-              key={index}
-              className="flex flex-col rounded-3xl w-full md:w-1/3 lg:w-1/4 p-4"
-            >
-              <div className="bg-white rounded-xl shadow-lg dark:bg-gray-800 p-6">
-                <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-6">
-                  Title of the Card
-                </h2>
-                <div className="flex flex-col space-y-4">
-                  <button className="bg-gray-100 p-2 rounded-full dark:bg-gray-700 text-sm text-gray-800 dark:text-gray-300">
-                    Button Text
-                  </button>
-                  {/* Repeat button as needed */}
-                </div>
+          <div className="flex flex-col rounded-3xl w-full md:w-1/3 lg:w-1/4 p-4">
+            <div className="bg-white rounded-xl shadow-lg dark:bg-gray-800 p-6">
+              <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-6">
+                {questions[0].topic}
+              </h2>
+              <div className="flex flex-col space-y-4">
+                <button className="bg-gray-100 p-2 rounded-full dark:bg-gray-700 text-sm text-gray-800 dark:text-gray-300">
+                  {questions[0][0]}
+                </button>
+                <button className="bg-gray-100 p-2 rounded-full dark:bg-gray-700 text-sm text-gray-800 dark:text-gray-300">
+                  {questions[0][1]}
+                </button>
+                <button className="bg-gray-100 p-2 rounded-full dark:bg-gray-700 text-sm text-gray-800 dark:text-gray-300">
+                  {questions[0][2]}
+                </button>
               </div>
             </div>
-          ))}
+          </div>
+          <div className="flex flex-col rounded-3xl w-full md:w-1/3 lg:w-1/4 p-4">
+            <div className="bg-white rounded-xl shadow-lg dark:bg-gray-800 p-6">
+              <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-6">
+                {questions[1].topic}
+              </h2>
+              <div className="flex flex-col space-y-4">
+                <button className="bg-gray-100 p-2 rounded-full dark:bg-gray-700 text-sm text-gray-800 dark:text-gray-300">
+                  {questions[1][0]}
+                </button>
+                <button className="bg-gray-100 p-2 rounded-full dark:bg-gray-700 text-sm text-gray-800 dark:text-gray-300">
+                  {questions[1][1]}
+                </button>
+                <button className="bg-gray-100 p-2 rounded-full dark:bg-gray-700 text-sm text-gray-800 dark:text-gray-300">
+                  {questions[2][2]}
+                </button>
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-col rounded-3xl w-full md:w-1/3 lg:w-1/4 p-4">
+            <div className="bg-white rounded-xl shadow-lg dark:bg-gray-800 p-6">
+              <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-6">
+                {questions[2].topic}
+              </h2>
+              <div className="flex flex-col space-y-4">
+                <button className="bg-gray-100 p-2 rounded-full dark:bg-gray-700 text-sm text-gray-800 dark:text-gray-300">
+                  {questions[2][0]}
+                </button>
+                <button className="bg-gray-100 p-2 rounded-full dark:bg-gray-700 text-sm text-gray-800 dark:text-gray-300">
+                  {questions[2][1]}
+                </button>
+                <button className="bg-gray-100 p-2 rounded-full dark:bg-gray-700 text-sm text-gray-800 dark:text-gray-300">
+                  {questions[2][2]}
+                </button>
+              </div>
+            </div>
+          </div>
         </>
       )}
-      {/* Chat component */}
-      {/* <div className="w-full md:w-1/2 lg:w-1/3 p-4">
-        <Chat />
-      </div> */}
     </div>
   );
 }

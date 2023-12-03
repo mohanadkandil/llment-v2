@@ -1,6 +1,4 @@
 "use client";
-import Pdf from "@/components/ui/Pdf";
-import { Card } from "@/components/ui/card";
 import Cards from "@/components/ui/cards";
 import { Chat } from "@/components/ui/cards";
 import useStore from "@/store/useStore";
